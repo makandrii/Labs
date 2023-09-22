@@ -1,14 +1,19 @@
 package org.makarov.lab3;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
-@Getter
-@Setter
 public class Order {
     private String id;
     private List<Product> products;
-    private String status;
+    @Getter
+    private Status status;
+
+    public Order(List<Product> products) {
+        id = UUID.randomUUID().toString();
+        this.products = products;
+        status = Status.Pending;
+    }
 }
