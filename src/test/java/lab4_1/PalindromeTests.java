@@ -1,3 +1,4 @@
+package lab4_1;
 
 import org.junit.jupiter.api.Test;
 
