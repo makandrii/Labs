@@ -6,6 +6,5 @@
 
 ## Зміст
 
-- [Лабораторна робота №4.1]
-
-[Лабораторна робота №4.1]: src/main/java/org/makarov/lab4_1/README.md
+- [Лабораторна робота №4.1](src/main/java/org/makarov/lab4_1/README.md)
+- [Лабораторна робота №4.2](src/main/java/org/makarov/lab4_2/README.md)
