@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DecoderTests {
     @Test
     public void vowelsMethodTest() {
-        assertEquals("testing", Decoder.vowelsMethodDecode("t2st3ng"));
+        assertEquals("testing", Decoder.decode("t2st3ng"));
     }
 
     @Test
     public void consonantsMethodTest() {
-        assertEquals("testing", Decoder.consonantsMethodDecode("vetviph"));
+        assertEquals("testing", Decoder.decode("vetviph"));
     }
 }

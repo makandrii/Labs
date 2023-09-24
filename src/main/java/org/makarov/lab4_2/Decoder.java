@@ -1,7 +1,14 @@
 package org.makarov.lab4_2;
 
 public class Decoder {
-    public static String vowelsMethodDecode(String word) {
+    public static String decode(String word) {
+        if (word.matches("\\d+")) {
+            return vowelsMethodDecode(word);
+        }
+        return consonantsMethodDecode(word);
+    }
+
+    private static String vowelsMethodDecode(String word) {
         return word.chars()
                 .mapToObj(symbol -> {
                     switch (symbol) {
@@ -23,7 +30,7 @@ public class Decoder {
                 .toString();
     }
 
-    public static String consonantsMethodDecode(String word) {
+    private static String consonantsMethodDecode(String word) {
         return word.chars().mapToObj(symbol -> {
             if ("bfjpv".contains(Character.toString(symbol))) {
                 return (char) (symbol - 2);
