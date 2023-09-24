@@ -17,5 +17,5 @@
 
 **Під час виконання лабораторної роботи покращив вміння користуватися рядками Java**
 
-[тести]: ../../../../../test/java/PalindromeTests.java
+[тести]: ../../../../../test/java/lab4_1/PalindromeTests.java
 [функцію]: Palindrome.java
