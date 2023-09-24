@@ -2,7 +2,7 @@ package org.makarov.lab4_2;
 
 public class Decoder {
     public static String decode(String word) {
-        if (word.matches("\\d+")) {
+        if (word.matches(".*\\d+.*")) {
             return vowelsMethodDecode(word);
         }
         return consonantsMethodDecode(word);
