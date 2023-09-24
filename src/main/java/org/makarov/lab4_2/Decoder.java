@@ -24,14 +24,14 @@ public class Decoder {
     }
 
     public static String consonantsMethodDecode(String word) {
-        return word.chars().map(symbol -> {
+        return word.chars().mapToObj(symbol -> {
             if ("bfjpv".contains(Character.toString(symbol))) {
-                return symbol - 2;
+                return (char) (symbol - 2);
             }
             if ("cdghklmnqrstwxyz".contains(Character.toString(symbol))) {
-                return symbol - 1;
+                return (char) (symbol - 1);
             }
-            return symbol;
+            return (char) symbol;
         }).collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
     }
 }
