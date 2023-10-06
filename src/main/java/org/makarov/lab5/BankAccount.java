@@ -1,10 +1,11 @@
 package org.makarov.lab5;
 
-import org.makarov.lab5.exceptions.InsufficientFundsException;
+import lombok.Getter;
 import org.makarov.lab5.exceptions.NegativeAmountException;
 
 public class BankAccount {
     private static int amountOfAccounts = 0;
+    @Getter
     private int accountNumber;
     private String accountName;
     private double balance;
