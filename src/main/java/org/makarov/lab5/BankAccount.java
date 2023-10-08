@@ -16,14 +16,14 @@ public class BankAccount {
         balance = 0.0d;
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount) throws NegativeAmountException {
         if (amount < 0.0d) {
             throw new NegativeAmountException("It is not possible to invest a negative amount of money");
         }
         balance += amount;
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws NegativeAmountException, InsufficientFundsException {
         if (amount < 0.0d) {
             throw new NegativeAmountException("It is not possible to withdraw a negative amount of money");
         }

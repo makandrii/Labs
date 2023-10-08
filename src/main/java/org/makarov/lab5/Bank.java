@@ -1,6 +1,8 @@
 package org.makarov.lab5;
 
 import org.makarov.lab5.exceptions.AccountNotFoundException;
+import org.makarov.lab5.exceptions.InsufficientFundsException;
+import org.makarov.lab5.exceptions.NegativeAmountException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +21,15 @@ public class Bank {
         return newAccount;
     }
 
-    public BankAccount findAccount(int accountNumber) {
+    public BankAccount findAccount(int accountNumber) throws AccountNotFoundException {
         return accounts.stream()
                 .filter(account -> account.getAccountNumber() == accountNumber)
                 .findFirst()
                 .orElseThrow(() -> new AccountNotFoundException("Account not found for number: " + accountNumber));
     }
 
-    public void transferMoney(int fromAccountNumber, int toAccountNumber, double amount) {
+    public void transferMoney(int fromAccountNumber, int toAccountNumber, double amount)
+            throws AccountNotFoundException, NegativeAmountException, InsufficientFundsException {
         BankAccount fromAccount = findAccount(fromAccountNumber);
         BankAccount toAccount = findAccount(toAccountNumber);
 
