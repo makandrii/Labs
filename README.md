@@ -9,3 +9,4 @@
 - [Лабораторна робота №3](src/main/java/org/makarov/lab3/README.md)
 - [Лабораторна робота №4.1](src/main/java/org/makarov/lab4_1/README.md)
 - [Лабораторна робота №4.2](src/main/java/org/makarov/lab4_2/README.md)
+- [Лабораторна робота №5](src/main/java/org/makarov/lab5/README.md)
