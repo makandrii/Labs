@@ -1,6 +1,7 @@
 package org.makarov.lab5;
 
 import lombok.Getter;
+import org.makarov.lab5.exceptions.InsufficientFundsException;
 import org.makarov.lab5.exceptions.NegativeAmountException;
 
 public class BankAccount {
@@ -26,6 +27,9 @@ public class BankAccount {
     public void withdraw(double amount) {
         if (amount < 0.0d) {
             throw new NegativeAmountException("It is not possible to withdraw a negative amount of money");
+        }
+        if (amount > balance) {
+            throw new InsufficientFundsException("There are not enough funds in the account");
         }
         balance -= amount;
     }
