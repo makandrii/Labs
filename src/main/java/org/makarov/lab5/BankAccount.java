@@ -5,14 +5,13 @@ import org.makarov.lab5.exceptions.InsufficientFundsException;
 import org.makarov.lab5.exceptions.NegativeAmountException;
 
 public class BankAccount {
-    private static int amountOfAccounts = 0;
     @Getter
     private int accountNumber;
     private String accountName;
     private double balance;
 
-    public BankAccount(String name) {
-        accountNumber = ++amountOfAccounts;
+    public BankAccount(String name, int number) {
+        accountNumber = number;
         accountName = name;
         balance = 0.0d;
     }

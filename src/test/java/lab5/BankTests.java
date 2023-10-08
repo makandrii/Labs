@@ -18,7 +18,6 @@ public class BankTests {
         bank = new Bank();
     }
 
-
     @Test
     public void testFindAccountMustReturnAccount() {
         BankAccount account = bank.createAccount("Andrii", 1000);

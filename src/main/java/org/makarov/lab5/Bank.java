@@ -13,7 +13,7 @@ public class Bank {
     }
 
     public BankAccount createAccount(String accountName, double initialDeposit) {
-        BankAccount newAccount = new BankAccount(accountName);
+        BankAccount newAccount = new BankAccount(accountName, accounts.size() + 1);
         newAccount.deposit(initialDeposit);
         accounts.add(newAccount);
         return newAccount;
