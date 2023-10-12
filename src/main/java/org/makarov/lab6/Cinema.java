@@ -18,6 +18,10 @@ public class Cinema {
         Arrays.stream(seats).forEach(seat -> cinema[hallNumber][row][seat] = 1);
     }
 
+    public void cancelBooking(int hallNumber, int row, int[] seats) {
+        Arrays.stream(seats).forEach(seat -> cinema[hallNumber][row][seat] = 0);
+    }
+
     private boolean isBooked(int hallNumber, int row, int[] seats) {
         return Arrays.stream(seats)
                 .anyMatch(seat -> cinema[hallNumber][row][seat] == 1);
