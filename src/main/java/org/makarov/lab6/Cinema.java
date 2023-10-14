@@ -1,6 +1,5 @@
 package org.makarov.lab6;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -93,6 +92,16 @@ public class Cinema {
             return Optional.empty();
         } else {
             return Optional.of(result);
+        }
+    }
+
+    public void autoBook(int hallNumber, int numSeats) {
+        Optional<int[]> bestSeats = findBestAvailable(hallNumber, numSeats);
+        if (bestSeats.isPresent()) {
+            int[] seats = bestSeats.get();
+            bookSeats(hallNumber, seats[0], IntStream.range(seats[1], seats[1] + numSeats).toArray());
+        } else {
+            System.err.println("There are no available seats in this hall.");
         }
     }
 
