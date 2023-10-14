@@ -8,10 +8,14 @@ public class Cinema {
     public int[][][] cinema;
 
     public Cinema() {
-        cinema = new int[5][10][20];
+        cinema = new int[3][10][20];
     }
 
     public void bookSeats(int hallNumber, int row, int[] seats) {
+        if (seats.length > cinema[hallNumber][row].length) {
+            System.err.println("There are not enough seats in the row");
+            return;
+        }
         if (isBooked(hallNumber, row, seats)) {
             System.err.println("One or more of these seats are already booked");
             return;
@@ -21,10 +25,20 @@ public class Cinema {
     }
 
     public void cancelBooking(int hallNumber, int row, int[] seats) {
+        if (seats.length > cinema[hallNumber][row].length) {
+            System.err.println("There are not enough seats in the row");
+            return;
+        }
+
         Arrays.stream(seats).forEach(seat -> cinema[hallNumber][row][seat] = 0);
     }
 
     public boolean checkAvailability(int screen, int numSeats) {
+        if (numSeats > cinema[screen][0].length) {
+            System.err.println("There are not enough seats in the row");
+            return false;
+        }
+
         return IntStream.range(0, cinema[screen].length)
                 .allMatch(row -> IntStream.range(0, cinema[screen][row].length - numSeats)
                         .noneMatch(firstPtr -> IntStream.range(0, numSeats)
@@ -54,6 +68,7 @@ public class Cinema {
 
     public Optional<int[]> findBestAvailable(int hallNumber, int numSeats) {
         if (numSeats > cinema[hallNumber][0].length) {
+            System.err.println("There are not enough seats in the row");
             return Optional.empty();
         }
 
@@ -110,7 +125,7 @@ public class Cinema {
                 .anyMatch(seat -> cinema[hallNumber][row][seat] == 1);
     }
 
-    private Optional<Integer>[][] buildArrayOfCosts(int hallNumber) {
+    public Optional<Integer>[][] buildArrayOfCosts(int hallNumber) {
         Optional<Integer>[][] result = new Optional[cinema[hallNumber].length][cinema[hallNumber][0].length];
         for (int row = 0; row < Math.ceil(cinema[hallNumber].length / 2.0); row++) {
             for (int seat = 0, cost = row; seat < Math.ceil(result[row].length / 2.0); seat++, cost++) {
