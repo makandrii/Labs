@@ -122,12 +122,8 @@ public class Cinema {
 
     public boolean autoBook(int hallNumber, int numSeats) {
         Optional<int[]> bestSeats = findBestAvailable(hallNumber, numSeats);
-        if (bestSeats.isPresent()) {
-            int[] seats = bestSeats.get();
-            return bookSeats(hallNumber, seats[0], IntStream.range(seats[1], seats[1] + numSeats).toArray());
-        } else {
-            return false;
-        }
+        return bestSeats.map(seats -> bookSeats(hallNumber, seats[0], IntStream.range(seats[1], seats[1] + numSeats).toArray()))
+                .orElse(false);
     }
 
     private boolean isBooked(int hallNumber, int row, int[] seats) {
