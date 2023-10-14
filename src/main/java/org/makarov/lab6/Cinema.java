@@ -11,31 +11,35 @@ public class Cinema {
         cinema = new int[halls][rows][seats];
     }
 
-    public void bookSeats(int hallNumber, int row, int[] seats) {
-        if (seats.length > cinema[hallNumber][row].length) {
-            System.err.println("There are not enough seats in the row");
-            return;
+    public boolean bookSeats(int hallNumber, int row, int[] seats) {
+        if (hallNumber >= cinema.length || row >= cinema[hallNumber].length
+                || Arrays.stream(seats).anyMatch(seat -> seat >= cinema[hallNumber][row].length)) {
+            System.err.println("Incorrect input");
+            return false;
         }
         if (isBooked(hallNumber, row, seats)) {
             System.err.println("One or more of these seats are already booked");
-            return;
+            return false;
         }
 
         Arrays.stream(seats).forEach(seat -> cinema[hallNumber][row][seat] = 1);
+        return true;
     }
 
-    public void cancelBooking(int hallNumber, int row, int[] seats) {
-        if (seats.length > cinema[hallNumber][row].length) {
-            System.err.println("There are not enough seats in the row");
-            return;
+    public boolean cancelBooking(int hallNumber, int row, int[] seats) {
+        if (hallNumber >= cinema.length || row >= cinema[hallNumber].length
+                || Arrays.stream(seats).anyMatch(seat -> seat >= cinema[hallNumber][row].length)) {
+            System.err.println("Incorrect input");
+            return false;
         }
 
         Arrays.stream(seats).forEach(seat -> cinema[hallNumber][row][seat] = 0);
+        return true;
     }
 
     public boolean checkAvailability(int screen, int numSeats) {
-        if (numSeats > cinema[screen][0].length) {
-            System.err.println("There are not enough seats in the row");
+        if (screen >= cinema.length || numSeats > cinema[screen][0].length) {
+            System.err.println("Incorrect input");
             return false;
         }
 
@@ -73,8 +77,8 @@ public class Cinema {
     }
 
     public Optional<int[]> findBestAvailable(int hallNumber, int numSeats) {
-        if (numSeats > cinema[hallNumber][0].length) {
-            System.err.println("There are not enough seats in the row");
+        if (hallNumber >= cinema.length || numSeats > cinema[hallNumber][0].length) {
+            System.err.println("Incorrect input");
             return Optional.empty();
         }
 
@@ -90,14 +94,14 @@ public class Cinema {
         int[] result = new int[0];
         int maxSum = 0;
         for (int row = 0; row < cinema[hallNumber].length; row++) {
-            for (int firstPtr = 0; firstPtr < cinema[hallNumber][row].length - numSeats; firstPtr++) {
+            first: for (int firstPtr = 0; firstPtr < cinema[hallNumber][row].length - numSeats; firstPtr++) {
                 int currentSum = 0;
                 for (int secondPtr = 0, i = 0; secondPtr < numSeats; secondPtr++) {
                     if (costs[row][firstPtr + secondPtr].isPresent()) {
                         currentSum += costs[row][firstPtr + secondPtr].get();
                     } else {
                         firstPtr += secondPtr;
-                        break;
+                        break first;
                     }
                 }
                 if (currentSum > maxSum) {
@@ -116,13 +120,13 @@ public class Cinema {
         }
     }
 
-    public void autoBook(int hallNumber, int numSeats) {
+    public boolean autoBook(int hallNumber, int numSeats) {
         Optional<int[]> bestSeats = findBestAvailable(hallNumber, numSeats);
         if (bestSeats.isPresent()) {
             int[] seats = bestSeats.get();
-            bookSeats(hallNumber, seats[0], IntStream.range(seats[1], seats[1] + numSeats).toArray());
+            return bookSeats(hallNumber, seats[0], IntStream.range(seats[1], seats[1] + numSeats).toArray());
         } else {
-            System.err.println("There are no available seats in this hall.");
+            return false;
         }
     }
 
