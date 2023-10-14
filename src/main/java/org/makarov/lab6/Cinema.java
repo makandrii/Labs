@@ -39,12 +39,18 @@ public class Cinema {
             return false;
         }
 
-        return IntStream.range(0, cinema[screen].length)
-                .allMatch(row -> IntStream.range(0, cinema[screen][row].length - numSeats)
-                        .noneMatch(firstPtr -> IntStream.range(0, numSeats)
-                                .anyMatch(secondPtr -> cinema[screen][row][firstPtr + secondPtr] == 1)
-                        )
-                );
+        for (int row = 0; row < cinema[screen].length; row++) {
+            first: for (int firstPtr = 0; firstPtr <= cinema[screen][row].length - numSeats; firstPtr++) {
+                for (int secondPtr = 0; secondPtr < numSeats; secondPtr++) {
+                    if (cinema[screen][row][firstPtr + secondPtr] == 1) {
+                        firstPtr += secondPtr;
+                        continue first;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public void printSeatingArrangement(int hallNumber) {
