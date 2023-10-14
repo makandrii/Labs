@@ -7,8 +7,8 @@ import java.util.stream.IntStream;
 public class Cinema {
     public int[][][] cinema;
 
-    public Cinema() {
-        cinema = new int[3][10][20];
+    public Cinema(int halls, int rows, int seats) {
+        cinema = new int[halls][rows][seats];
     }
 
     public void bookSeats(int hallNumber, int row, int[] seats) {
