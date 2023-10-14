@@ -52,7 +52,7 @@ public class Cinema {
         final String BLACK_BG = "\u001B[40m\u001B[32m";
         final String YELLOW_BG = "\u001B[43m\u001B[31m";
 
-        String header = "\t\t1\t2\t3\t4\t5\t6\t7\t8\t9  10  11  12  13  14  15  16  17  18  19  20\t\t\n";
+        String header = buildHeader(hallNumber);
         StringBuilder output = new StringBuilder(header);
         for (int row = 0; row < cinema[hallNumber].length; row++) {
             output.append((row + 1 >= 10) ? " " : "  ").append(String.format("%d |%s", row + 1, BLACK_BG));
@@ -123,6 +123,19 @@ public class Cinema {
     private boolean isBooked(int hallNumber, int row, int[] seats) {
         return Arrays.stream(seats)
                 .anyMatch(seat -> cinema[hallNumber][row][seat] == 1);
+    }
+
+    private String buildHeader(int hallNumber) {
+        StringBuilder header = new StringBuilder("\t");
+        for (int seat = 0; seat < cinema[hallNumber][0].length; seat++) {
+            if ((seat + 1) / 10 == 0) {
+                header.append(String.format("\t%d", seat + 1));
+            } else {
+                header.append(String.format("  %d", seat + 1));
+            }
+        }
+        header.append("\t\t\n");
+        return header.toString();
     }
 
     public Optional<Integer>[][] buildArrayOfCosts(int hallNumber) {
