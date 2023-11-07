@@ -1,14 +1,22 @@
 package org.makarov.lab7;
 
-import lombok.Data;
+import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.Map;
 
-@Data
+@Getter
 public class User {
-    private Integer id;
-    private String username;
-    private Map<Product, Integer> cart;
+    private final Integer id;
+    private final String username;
+    private final Map<Product, Integer> cart;
+    private static Integer counter = 0;
+
+    public User(String name) {
+        id = ++counter;
+        username = name;
+        cart = new HashMap<>();
+    }
 
     public void addToCart(Product product, Integer amount) {
         cart.put(product, amount);
