@@ -1,14 +1,23 @@
 package org.makarov.lab7;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ECommercePlatform {
     private final Map<Integer, User> users = new HashMap<>();
     private final Map<Integer, Product> products = new HashMap<>();
     private final Map<Integer, Order> orders = new HashMap<>();
+
+    public Optional<User> getUserById(Integer userId) {
+        return users.containsKey(userId)? Optional.of(users.get(userId)) : Optional.empty();
+    }
+
+    public Optional<Product> getProductById(Integer productId) {
+        return products.containsKey(productId)? Optional.of(products.get(productId)) : Optional.empty();
+    }
+
+    public Optional<Order> getOrderById(Integer orderId) {
+        return orders.containsKey(orderId)? Optional.of(orders.get(orderId)) : Optional.empty();
+    }
 
     public void addUser(User user) {
         users.put(user.getId(), user);
