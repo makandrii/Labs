@@ -1,11 +1,13 @@
 package org.makarov.lab7;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@ToString
 public class User {
     private final Integer id;
     private final String username;
