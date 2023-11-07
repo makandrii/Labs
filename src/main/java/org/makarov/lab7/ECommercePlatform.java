@@ -1,5 +1,6 @@
 package org.makarov.lab7;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +14,23 @@ public class ECommercePlatform {
         users.put(user.getId(), user);
     }
 
+    public void addUser(User... users) {
+        Arrays.stream(users).forEach(this::addUser);
+    }
+
     public void addProduct(Product product) {
         products.put(product.getId(), product);
+    }
+
+    public void addProduct(Product... products) {
+        Arrays.stream(products).forEach(this::addProduct);
     }
 
     public void makeOrder(Integer userId) {
         User user = users.get(userId);
         Order order = new Order(user.getId(), user.getCart());
+        order.getOrderDetails().forEach((key, value) ->
+                updateStock(key.getId(), key.getStock() - value));
         orders.put(order.getId(), order);
     }
 
