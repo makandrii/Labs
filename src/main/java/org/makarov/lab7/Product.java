@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class Product {
+public class Product implements Comparable<Product> {
     private final Integer id;
     private final String name;
     @Setter
@@ -20,5 +20,10 @@ public class Product {
         this.name = name;
         this.price = price;
         this.stock = stock;
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        return Double.compare(price, o.price);
     }
 }
