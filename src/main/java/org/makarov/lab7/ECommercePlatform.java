@@ -1,5 +1,8 @@
 package org.makarov.lab7;
 
+import org.jetbrains.annotations.NotNull;
+import org.makarov.lab7.exceptions.*;
+
 import java.util.*;
 
 public class ECommercePlatform {
@@ -19,24 +22,28 @@ public class ECommercePlatform {
         return orders.containsKey(orderId)? Optional.of(orders.get(orderId)) : Optional.empty();
     }
 
-    public void addUser(User user) {
+    public void addUser(@NotNull User user) {
         users.put(user.getId(), user);
     }
 
-    public void addUser(User... users) {
+    public void addUser(@NotNull User... users) {
         Arrays.stream(users).forEach(this::addUser);
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(@NotNull Product product) {
         products.put(product.getId(), product);
     }
 
-    public void addProduct(Product... products) {
+    public void addProduct(@NotNull Product... products) {
         Arrays.stream(products).forEach(this::addProduct);
     }
 
-    public void makeOrder(Integer userId) {
+    public void makeOrder(Integer userId) throws UserNotFoundException {
         User user = users.get(userId);
+        if (user == null) {
+            throw new UserNotFoundException(userId);
+        }
+
         Order order = new Order(user.getId(), user.getCart());
 
         user.clearCart();
@@ -63,13 +70,20 @@ public class ECommercePlatform {
         return orders.values().stream().toList();
     }
 
-    public void updateStock(Integer productId, int newStock) {
+    public void updateStock(Integer productId, int newStock) throws ProductNotFoundException {
         Product product = products.get(productId);
+        if (product == null) {
+            throw new ProductNotFoundException(productId);
+        }
+
         product.setStock(newStock);
     }
 
-    public List<Product> makeRecommendations(Integer userId) {
+    public List<Product> makeRecommendations(Integer userId) throws UserNotFoundException {
         User user = users.get(userId);
+        if (user == null) {
+            throw new UserNotFoundException(userId);
+        }
 
         return user.getHistory().entrySet()
                 .stream()

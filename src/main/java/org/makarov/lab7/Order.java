@@ -2,6 +2,7 @@ package org.makarov.lab7;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class Order {
     private double totalPrice;
     private static Integer counter = 0;
 
-    public Order(Integer userId, Map<Product, Integer> orderDetails) {
+    public Order(@NotNull Integer userId, @NotNull Map<Product, Integer> orderDetails) {
         id = ++counter;
         this.userId = userId;
         this.orderDetails = orderDetails;

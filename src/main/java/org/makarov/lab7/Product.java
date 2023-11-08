@@ -3,6 +3,7 @@ package org.makarov.lab7;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 @ToString
@@ -15,7 +16,7 @@ public class Product implements Comparable<Product> {
     private int stock;
     private static Integer counter = 0;
 
-    public Product(String name, double price, int stock) {
+    public Product(@NotNull String name, double price, int stock) {
         id = ++counter;
         this.name = name;
         this.price = price;
