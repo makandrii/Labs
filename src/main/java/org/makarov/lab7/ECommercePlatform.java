@@ -47,6 +47,10 @@ public class ECommercePlatform {
         return products.values().stream().filter(product -> product.getStock() > 0).toList();
     }
 
+    public List<Product> makeListOfProducts() {
+        return products.values().stream().toList();
+    }
+
     public List<User> makeListOfUsers() {
         return users.values().stream().toList();
     }

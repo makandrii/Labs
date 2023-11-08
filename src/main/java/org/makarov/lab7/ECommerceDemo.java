@@ -1,5 +1,7 @@
 package org.makarov.lab7;
 
+import java.util.List;
+
 public class ECommerceDemo {
     public static final ECommercePlatform platform = new ECommercePlatform();
 
@@ -10,7 +12,7 @@ public class ECommerceDemo {
                 new User("Egor"));
 
         platform.addProduct(
-                new Product("Phone", 600, 1000),
+                new Product("Phone", 100, 1000),
                 new Product("Keyboard", 39.99, 20),
                 new Product("Monitor", 200, 500));
 
@@ -22,13 +24,27 @@ public class ECommerceDemo {
 
         platform.makeOrder(user.getId());
 
-        System.out.println("List of users:");
-        platform.makeListOfUsers().forEach(System.out::println);
+        printSortedProducts();
+    }
 
-        System.out.println("List of available products:");
-        platform.makeListOfAvailableProducts().forEach(System.out::println);
+    public static void printSortedProducts() {
+        System.out.println("\t*** Sorted Products ***");
+        System.out.println("\t1) By name:");
+        platform.makeListOfProducts()
+                .stream()
+                .sorted(new ProductNameComparator())
+                .forEach(System.out::println);
 
-        System.out.println("List of orders:");
-        platform.makeListOfOrders().forEach(System.out::println);
+        System.out.println("\t2) By price:");
+        platform.makeListOfProducts()
+                .stream()
+                .sorted()
+                .forEach(System.out::println);
+
+        System.out.println("\t3) By stock:");
+        platform.makeListOfProducts()
+                .stream()
+                .sorted(new ProductStockComparator())
+                .forEach(System.out::println);
     }
 }
