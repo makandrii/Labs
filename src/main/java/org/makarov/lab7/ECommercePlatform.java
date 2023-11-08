@@ -67,4 +67,14 @@ public class ECommercePlatform {
         Product product = products.get(productId);
         product.setStock(newStock);
     }
+
+    public List<Product> makeRecommendations(Integer userId) {
+        User user = users.get(userId);
+
+        return user.getHistory().entrySet()
+                .stream()
+                .sorted(Map.Entry.<Product, Integer>comparingByValue().reversed())
+                .map(Map.Entry::getKey)
+                .toList();
+    }
 }
