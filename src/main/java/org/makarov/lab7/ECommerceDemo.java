@@ -1,7 +1,5 @@
 package org.makarov.lab7;
 
-import java.util.List;
-
 public class ECommerceDemo {
     public static final ECommercePlatform platform = new ECommercePlatform();
 
@@ -16,15 +14,27 @@ public class ECommerceDemo {
                 new Product("Keyboard", 39.99, 20),
                 new Product("Monitor", 200, 500));
 
-        // It's demo, so I skip check
+        // It's demo, so I skip checks
         User user = platform.getUserById(2).get();
 
-        user.addToCart(platform.getProductById(1).get(), 50);
         user.addToCart(platform.getProductById(2).get(), 20);
+        user.addToCart(platform.getProductById(1).get(), 50);
+        user.modifyInCart(platform.getProductById(1).get(), 50);
 
         platform.makeOrder(user.getId());
 
-        printSortedProducts();
+        user.addToCart(platform.makeRecommendations(user.getId()).get(0), 10);
+
+        platform.makeOrder(user.getId());
+
+        System.out.println("List of users:");
+        platform.makeListOfUsers().forEach(System.out::println);
+
+        System.out.println("List of products:");
+        platform.makeListOfProducts().forEach(System.out::println);
+
+        System.out.println("List of orders:");
+        platform.makeListOfOrders().forEach(System.out::println);
     }
 
     public static void printSortedProducts() {

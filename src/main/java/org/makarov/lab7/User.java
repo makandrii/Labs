@@ -11,7 +11,7 @@ import java.util.Map;
 public class User {
     private final Integer id;
     private final String username;
-    private final Map<Product, Integer> cart;
+    private Map<Product, Integer> cart;
     private final Map<Product, Integer> history;
     private static Integer counter = 0;
 
@@ -32,6 +32,10 @@ public class User {
 
     public void modifyInCart(Product product, Integer amount) {
         cart.merge(product, amount, Integer::sum);
+    }
+
+    public void clearCart() {
+        cart = new HashMap<>();
     }
 
     public void updateHistory(Order order) {
