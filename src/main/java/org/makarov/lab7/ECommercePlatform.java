@@ -38,7 +38,10 @@ public class ECommercePlatform {
     public void makeOrder(Integer userId) {
         User user = users.get(userId);
         Order order = new Order(user.getId(), user.getCart());
+
         user.getCart().forEach((product, amount) -> user.removeFromCart(product));
+        user.updateHistory(order);
+
         order.getOrderDetails().forEach((product, amount) ->
                 updateStock(product.getId(), product.getStock() - amount));
         orders.put(order.getId(), order);
