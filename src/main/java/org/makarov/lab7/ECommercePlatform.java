@@ -22,20 +22,16 @@ public class ECommercePlatform {
         return orders.containsKey(orderId)? Optional.of(orders.get(orderId)) : Optional.empty();
     }
 
-    public void addUser(@NotNull User user) {
+    public User registerUser(@NotNull String name) {
+        User user = new User(users.size() + 1, name);
         users.put(user.getId(), user);
+        return user;
     }
 
-    public void addUser(@NotNull User... users) {
-        Arrays.stream(users).forEach(this::addUser);
-    }
-
-    public void addProduct(@NotNull Product product) {
+    public Product registerProduct(@NotNull String name, double price, int stock) {
+        Product product = new Product(products.size() + 1, name, price, stock);
         products.put(product.getId(), product);
-    }
-
-    public void addProduct(@NotNull Product... products) {
-        Arrays.stream(products).forEach(this::addProduct);
+        return product;
     }
 
     public void makeOrder(Integer userId) throws UserNotFoundException {
@@ -44,7 +40,7 @@ public class ECommercePlatform {
             throw new UserNotFoundException(userId);
         }
 
-        Order order = new Order(user.getId(), user.getCart());
+        Order order = new Order(orders.size() + 1, user.getId(), user.getCart());
 
         user.clearCart();
         user.updateHistory(order);

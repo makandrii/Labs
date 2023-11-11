@@ -14,10 +14,9 @@ public class User {
     private final String username;
     private Map<Product, Integer> cart;
     private final Map<Product, Integer> history;
-    private static Integer counter = 0;
 
-    public User(@NotNull String name) {
-        id = ++counter;
+    public User(@NotNull Integer id, @NotNull String name) {
+        this.id = id;
         username = name;
         cart = new HashMap<>();
         history = new HashMap<>();

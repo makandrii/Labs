@@ -14,10 +14,9 @@ public class Product implements Comparable<Product> {
     private double price;
     @Setter
     private int stock;
-    private static Integer counter = 0;
 
-    public Product(@NotNull String name, double price, int stock) {
-        id = ++counter;
+    public Product(@NotNull Integer id, @NotNull String name, double price, int stock) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;

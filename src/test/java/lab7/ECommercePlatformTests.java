@@ -1,6 +1,5 @@
 package lab7;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.makarov.lab7.ECommercePlatform;
@@ -19,30 +18,20 @@ class ECommercePlatformTests {
     static User[] users;
     static Product[] products;
 
-    @BeforeAll
-    static void globalConfig() {
-        users = new User[]{
-                new User("User 1"),
-                new User("User 2"),
-                new User("User 3")
-        };
-        products = new Product[]{
-                new Product("Product 1", 0.50, 0),
-                new Product("Product 2", 19.99, 0),
-                new Product("Product 3", 50, 0)
-        };
-    }
-
     @BeforeEach
     void init() {
         platform = new ECommercePlatform();
 
-        products[0].setStock(10);
-        products[1].setStock(50);
-        products[2].setStock(100);
-
-        platform.addUser(users);
-        platform.addProduct(products);
+        users = new User[]{
+                platform.registerUser("User 1"),
+                platform.registerUser("User 2"),
+                platform.registerUser("User 3")
+        };
+        products = new Product[]{
+                platform.registerProduct("Product 1", 0.50, 10),
+                platform.registerProduct("Product 2", 19.99, 50),
+                platform.registerProduct("Product 3", 50, 100)
+        };
     }
 
     @Test

@@ -4,15 +4,13 @@ public class ECommerceDemo {
     public static final ECommercePlatform platform = new ECommercePlatform();
 
     public static void main(String[] args) {
-        platform.addUser(
-                new User("Andrii"),
-                new User("Vlad"),
-                new User("Egor"));
+        platform.registerUser("Andrii");
+        platform.registerUser("Vlad");
+        platform.registerUser("Egor");
 
-        platform.addProduct(
-                new Product("Phone", 100, 1000),
-                new Product("Keyboard", 39.99, 20),
-                new Product("Monitor", 200, 500));
+        platform.registerProduct("Phone", 100, 1000);
+        platform.registerProduct("Keyboard", 39.99, 20);
+        platform.registerProduct("Monitor", 200, 500);
 
         // It's demo, so I skip checks
         User user = platform.getUserById(2).get();

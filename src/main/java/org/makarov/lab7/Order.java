@@ -13,10 +13,9 @@ public class Order {
     private final Integer userId;
     private final Map<Product, Integer> orderDetails;
     private double totalPrice;
-    private static Integer counter = 0;
 
-    public Order(@NotNull Integer userId, @NotNull Map<Product, Integer> orderDetails) {
-        id = ++counter;
+    public Order(@NotNull Integer id, @NotNull Integer userId, @NotNull Map<Product, Integer> orderDetails) {
+        this.id = id;
         this.userId = userId;
         this.orderDetails = orderDetails;
         calculateTotalPrice();
