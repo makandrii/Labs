@@ -18,14 +18,14 @@ public class WeatherAPIClient {
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final String url
             = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timelinemulti";
-    private static final String query = "?datestart=last7days" +
-            "&unitGroup=metric" +
-            String.format("&key=%s", System.getProperty("apiKey"));
+    private static final String query = "?unitGroup=metric" + String.format("&key=%s", System.getProperty("apiKey"));
 
-    public static Optional<WeatherData> fetchDataFromAPI(String... cities)
+    public static Optional<WeatherData> fetchDataFromAPI(String timePeriod, String... cities)
             throws URISyntaxException, IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(url + query + String.format("&locations=%s", formatCities(cities))))
+                .uri(new URI(url + query + String.format("&datestart=%s&locations=%s",
+                        timePeriod,
+                        formatCities(cities))))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
