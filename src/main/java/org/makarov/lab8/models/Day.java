@@ -15,9 +15,4 @@ public class Day {
     private double precipitation;
     @JsonProperty("wspd")
     private double windSpeed;
-
-    @JsonProperty("datetimeStr")
-    public void parseDate(String datetimeStr) {
-        date = LocalDate.parse(datetimeStr);
-    }
 }
