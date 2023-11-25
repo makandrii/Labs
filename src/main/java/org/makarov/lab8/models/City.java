@@ -10,6 +10,6 @@ import java.util.Map;
 public class City {
     @JsonProperty("address")
     private String name;
-    private List<Day> days;
-    private Map<String, Station> stations;
+    private List<WeatherDay> days;
+    private Map<String, WeatherStation> stations;
 }

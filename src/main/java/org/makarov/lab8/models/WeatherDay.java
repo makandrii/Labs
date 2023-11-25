@@ -6,13 +6,18 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class Day {
+public class WeatherDay {
     private LocalDate date;
     @JsonProperty("temp")
     private double temperature;
     private double humidity;
     @JsonProperty("precip")
     private double precipitation;
-    @JsonProperty("wspd")
+    @JsonProperty("windspeed")
     private double windSpeed;
+
+    @JsonProperty("datetime")
+    public void parseDate(String datetime) {
+        date = LocalDate.parse(datetime);
+    }
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter @ToString
-public class Station {
+public class WeatherStation {
     private String id;
     private double latitude;
     private double longitude;
