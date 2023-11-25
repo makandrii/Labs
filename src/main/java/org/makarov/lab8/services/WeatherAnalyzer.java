@@ -1,37 +1,36 @@
 package org.makarov.lab8.services;
 
-import org.makarov.lab8.models.City;
-import org.makarov.lab8.models.Day;
-import org.makarov.lab8.models.Station;
-import org.makarov.lab8.models.WeatherData;
+import org.jetbrains.annotations.NotNull;
+import org.makarov.lab8.models.*;
 
+import java.time.Month;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class WeatherAnalyzer {
-    private static final Comparator<Day> byTemperatureComparator = Comparator.comparingDouble(Day::getTemperature);
-    private static final Comparator<Day> byHumidityComparator = Comparator.comparingDouble(Day::getHumidity);
+    private static final Comparator<WeatherDay> byTemperatureComparator = Comparator.comparingDouble(WeatherDay::getTemperature);
+    private static final Comparator<WeatherDay> byHumidityComparator = Comparator.comparingDouble(WeatherDay::getHumidity);
 
-    public static List<Station> findHottest(int maxCount, WeatherData data) {
+    public static List<WeatherStation> findHottest(int maxCount, WeatherData data) {
         return sortStationsBy(maxCount, data, byTemperatureComparator.reversed());
     }
 
-    public static List<Station> findColdest(int maxCount, WeatherData data) {
+    public static List<WeatherStation> findColdest(int maxCount, WeatherData data) {
         return sortStationsBy(maxCount, data, byTemperatureComparator);
     }
 
-    public static List<Station> findHighestHumidity(int maxCount, WeatherData data) {
+    public static List<WeatherStation> findHighestHumidity(int maxCount, WeatherData data) {
         return sortStationsBy(maxCount, data, byHumidityComparator.reversed());
     }
 
-    public static List<Station> findWithPrecipitation(int countOfDays, WeatherData data) {
+    public static List<WeatherStation> findWithPrecipitation(int countOfDays, WeatherData data) {
         return normalizeData(data)
                 .filter(city -> {
-                    List<Day> days = city.getDays();
-                    first: for (int firstPtr = 0; firstPtr < days.size() - countOfDays + 1; firstPtr++) {
+                    List<WeatherDay> weatherDays = city.getDays();
+                    first: for (int firstPtr = 0; firstPtr < weatherDays.size() - countOfDays + 1; firstPtr++) {
                         for (int secondPtr = 0; secondPtr < countOfDays; secondPtr++) {
-                            if (days.get(firstPtr + secondPtr).getPrecipitation() == 0) {
+                            if (weatherDays.get(firstPtr + secondPtr).getPrecipitation() == 0) {
                                 continue first;
                             }
                         }
@@ -43,13 +42,13 @@ public class WeatherAnalyzer {
                 .toList();
     }
 
-    public static List<Station> findWithIncreasedTemperature(int delta, int countOfDays, WeatherData data) {
+    public static List<WeatherStation> findWithIncreasedTemperature(int delta, int countOfDays, WeatherData data) {
         return normalizeData(data)
                 .filter(city -> {
-                    List<Day> days = city.getDays();
-                    for (int firstPtr = 0; firstPtr < days.size() - countOfDays + 1; firstPtr++) {
+                    List<WeatherDay> weatherDays = city.getDays();
+                    for (int firstPtr = 0; firstPtr < weatherDays.size() - countOfDays + 1; firstPtr++) {
                         for (int secondPtr = 0; secondPtr < countOfDays; secondPtr++) {
-                            if (days.get(secondPtr).getTemperature() - days.get(firstPtr).getTemperature() >= delta) {
+                            if (weatherDays.get(secondPtr).getTemperature() - weatherDays.get(firstPtr).getTemperature() >= delta) {
                                 return true;
                             }
                         }
@@ -60,7 +59,11 @@ public class WeatherAnalyzer {
                 .toList();
     }
 
-    private static List<Station> sortStationsBy(int maxCount, WeatherData data, Comparator<Day> comparator) {
+    public static WeatherMonth findHighestWindSpeed(List<WeatherMonth> months) {
+        return months.stream().max(Comparator.comparingDouble(WeatherMonth::windSpeed)).orElse(null);
+    }
+
+    private static List<WeatherStation> sortStationsBy(int maxCount, WeatherData data, Comparator<WeatherDay> comparator) {
         return normalizeData(data)
                 .sorted(Comparator.comparing(
                         c -> c.getDays().get(c.getDays().size() - 1),
