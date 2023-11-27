@@ -24,7 +24,7 @@ public class WeatherStatistic {
             }
 
             result.add(new WeatherMonth(
-                    month,
+                    month.name(),
                     avrTemperature / size,
                     avrHumidity / size,
                     avrPrecipitation / size,
