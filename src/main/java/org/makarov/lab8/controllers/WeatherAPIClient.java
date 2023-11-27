@@ -25,12 +25,6 @@ public class WeatherAPIClient {
 
     public static Optional<WeatherData> fetchDataFromAPI(String timePeriod, String... cities)
             throws URISyntaxException, IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(url + query + String.format("&datestart=%s&locations=%s",
-                        timePeriod,
-                        formatCities(cities))))
-                .build();
-
         HttpResponse<String> response
                 = client.send(makeRequest(timePeriod, cities), HttpResponse.BodyHandlers.ofString());
 
