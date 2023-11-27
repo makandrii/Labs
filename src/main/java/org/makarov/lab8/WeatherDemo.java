@@ -38,6 +38,7 @@ public class WeatherDemo {
 
         var hottest = WeatherAnalyzer.findHottest(10, data);
         var coldest = WeatherAnalyzer.findColdest(10, data);
+        var humidity = WeatherAnalyzer.findHighestHumidity(10, data);
         var precipitations = WeatherAnalyzer.findWithPrecipitation(7, data);
         var increased = WeatherAnalyzer.findWithIncreasedTemperature(5, 5, data);
         var statistic = WeatherStatistic.makeMonthStatistic(WeatherAPIClient.fetchYearDataFromAPI("Lviv, UA").get());
@@ -50,6 +51,7 @@ public class WeatherDemo {
 
         makeSheet(book, "Найгарячіші станції", hottest, WeatherStation.class);
         makeSheet(book, "Найхолодніші станції", coldest, WeatherStation.class);
+        makeSheet(book, "Найвологіші станції", humidity, WeatherStation.class);
         makeSheet(book, "Станції з опадами за останні 7 днів", precipitations, WeatherStation.class);
         makeSheet(book, "Станції, на яких температура зросла на 5 градусів за 5 днів", increased, WeatherStation.class);
         makeSheet(book, "Річна статистика для міста Львів", statistic, WeatherMonth.class);
