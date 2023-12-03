@@ -1,26 +1,23 @@
 package org.makarov.lab8;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jetbrains.annotations.NotNull;
-import org.makarov.lab8.controllers.WeatherAPIClient;
-import org.makarov.lab8.models.WeatherData;
 import org.makarov.lab8.models.WeatherMonth;
 import org.makarov.lab8.models.WeatherStation;
+import org.makarov.lab8.table.Row;
+import org.makarov.lab8.controllers.WeatherAPIClient;
+import org.makarov.lab8.models.WeatherData;
 import org.makarov.lab8.services.WeatherAnalyzer;
 import org.makarov.lab8.services.WeatherStatistic;
+import org.makarov.lab8.table.Table;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 public class WeatherDemo {
     public static void main(String[] args)
-            throws URISyntaxException, IOException, InterruptedException, IllegalAccessException {
+            throws URISyntaxException, IOException, InterruptedException {
         String[] cities = new String[]{
                 "Lviv, UA",
                 "Dnipro, UA",
@@ -44,48 +41,40 @@ public class WeatherDemo {
         var statistic = WeatherStatistic.makeMonthStatistic(WeatherAPIClient.fetchYearDataFromAPI("Lviv, UA").get());
         var windSpeed = WeatherAnalyzer.findHighestWindSpeed(statistic);
 
-        System.setProperty(
-                "-Dlog4j2.loggerContextFactory", "org.apache.logging.log4j.simple.SimpleLoggerContextFactory");
-
-        Workbook book = new XSSFWorkbook();
-
-        makeSheet(book, "Найгарячіші станції", hottest, WeatherStation.class);
-        makeSheet(book, "Найхолодніші станції", coldest, WeatherStation.class);
-        makeSheet(book, "Найвологіші станції", humidity, WeatherStation.class);
-        makeSheet(book, "Станції з опадами за останні 7 днів", precipitations, WeatherStation.class);
-        makeSheet(book, "Станції, на яких температура зросла на 5 градусів за 5 днів", increased, WeatherStation.class);
-        makeSheet(book, "Річна статистика для міста Львів", statistic, WeatherMonth.class);
-        makeSheet(book, "Місяць з найбільшою швидкістю вітру", List.of(windSpeed), WeatherMonth.class);
-
-        try (FileOutputStream fileOut = new FileOutputStream("Аналізовані дані.xlsx")) {
-            book.write(fileOut);
-            book.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        printData(hottest, WeatherStation.class);
+        printData(coldest, WeatherStation.class);
+        printData(humidity, WeatherStation.class);
+        printData(precipitations, WeatherStation.class);
+        printData(increased, WeatherStation.class);
+        printData(statistic, WeatherMonth.class);
+        printData(List.of(windSpeed), WeatherMonth.class);
     }
 
-    private static <T> void makeSheet(Workbook book, String name, @NotNull List<T> data, Class<T> type)
-            throws IllegalAccessException {
-        Sheet sheet = book.createSheet(name);
+    private static <T> void printData(List<T> list, Class<T> type) {
         Field[] fields = type.getDeclaredFields();
-        Row header = sheet.createRow(0);
-        for (int i = 0; i < fields.length; i++) {
-            header.createCell(i).setCellValue(fields[i].getName());
-        }
 
-        for (int i = 0; i < data.size(); i++) {
-            Row row = sheet.createRow(i + 1);
-            for (int j = 0; j < fields.length; j++) {
-                fields[j].setAccessible(true);
-                Object value = fields[j].get(data.get(i));
-                if (fields[j].getType().equals(String.class)) {
-                    row.createCell(j).setCellValue((String) value);
-                } else if (fields[j].getType().equals(double.class)) {
-                    row.createCell(j).setCellValue((double) value);
+        Table table = new Table();
+        Row header = table.createRow();
+        Arrays.stream(fields).forEach(field -> header.createCell(field.getName()));
+
+        list.forEach(data -> {
+            Row row = table.createRow();
+            Arrays.stream(fields).forEach(field -> {
+                try {
+                    field.setAccessible(true);
+                    Object value = field.get(data);
+                    field.setAccessible(false);
+                    if (field.getType() == String.class) {
+                        row.createCell((String) value);
+                    } else if (field.getType() == double.class) {
+                        row.createCell((double) value);
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
                 }
-                fields[j].setAccessible(false);
-            }
-        }
+            });
+        });
+
+        table.print();
     }
 }
