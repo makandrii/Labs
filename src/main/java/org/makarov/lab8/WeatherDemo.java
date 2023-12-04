@@ -41,12 +41,20 @@ public class WeatherDemo {
         var statistic = WeatherStatistic.makeMonthStatistic(WeatherAPIClient.fetchYearDataFromAPI("Lviv, UA").get());
         var windSpeed = WeatherAnalyzer.findHighestWindSpeed(statistic);
 
+
+        System.out.println("Найгарячіші станції");
         printData(hottest, WeatherStation.class);
+        System.out.println("Найгарячіші станції");
         printData(coldest, WeatherStation.class);
+        System.out.println("Найвологіші станції");
         printData(humidity, WeatherStation.class);
+        System.out.println("Станції з опадами за останні 7 днів");
         printData(precipitations, WeatherStation.class);
+        System.out.println("Станції, на яких температура зросла на 5 градусів за 5 днів");
         printData(increased, WeatherStation.class);
+        System.out.println("Річна статистика міста Львів");
         printData(statistic, WeatherMonth.class);
+        System.out.println("Місяць з найбільшою швидкістю вітру");
         printData(List.of(windSpeed), WeatherMonth.class);
     }
 
