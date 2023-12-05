@@ -19,8 +19,14 @@
     - [WeatherMonth]
 5. Додати сервісний клас, що вираховує середні значення за кожен місяць у році
     - [WeatherStatistic]
-6. Створити демонстраційний клас, який продемонструє функціональність програми та збереже усі проаналізовані дані в
-   Excel таблиці
+6. Додати пакет table, який зберігає реалізацію створення таблиць та їх виведення:
+   - [Cell]
+   - [StringCell]
+   - [DoubleCell]
+   - [Row]
+   - [Column]
+   - [Table]
+7. Створити демонстраційний клас, який продемонструє функціональність програми та виведе усі дані у формі таблиць
     - [WeatherDemo]
 
 ## Висновок
@@ -35,4 +41,10 @@
 [WeatherAnalyzer]: services/WeatherAnalyzer.java
 [WeatherMonth]: models/WeatherMonth.java
 [WeatherStatistic]: services/WeatherStatistic.java
+[Cell]: table/Cell.java
+[StringCell]: table/StringCell.java
+[DoubleCell]: table/DoubleCell.java
+[Row]: table/Row.java
+[Column]: table/Column.java
+[Table]: table/Table.java
 [WeatherDemo]: WeatherDemo.java
