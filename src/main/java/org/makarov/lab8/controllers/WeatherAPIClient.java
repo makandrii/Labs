@@ -21,7 +21,7 @@ public class WeatherAPIClient {
             = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     private static final String url
             = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timelinemulti";
-    private static final String query = "?unitGroup=metric" + String.format("&key=%s", System.getProperty("apiKey"));
+    private static final String query = "?unitGroup=metric" + "&key=EVXMPFYC4PUX74TBRL36ZW7EP";
 
     public static Optional<WeatherData> fetchDataFromAPI(String timePeriod, String... cities)
             throws URISyntaxException, IOException, InterruptedException {
