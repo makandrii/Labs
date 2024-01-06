@@ -14,3 +14,4 @@
 - [Лабораторна робота №7](src/main/java/org/makarov/lab7/README.md)
 - [Лабораторна робота №8](src/main/java/org/makarov/lab8/README.md)
 - [Лабораторна робота №9](src/main/java/org/makarov/lab9/README.md)
+- [Лабораторна робота №10](src/main/java/org/makarov/lab10/lab10.sql)
